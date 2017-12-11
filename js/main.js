@@ -8,34 +8,47 @@
     const httpRequest = new XMLHttpRequest();
 
   function getCarData() {
+      const url = 'GET', './includes/functions.php?carModel=' + this.id;
+
+  //the fetch API uses new JavaScript Promise API
+    fetch(url) //do an ajax call with fetch
+    .then((resp) => resp.json()) //convert to json
+    .then((data) => { processResult(data); }) //call the process function
+    .catch(function(error) {
+      //catch the error
+      console.log(error);
+
+    });
+
     // make an AJAX call to the DB; handle errors first
-    if (!httpRequest) {
-      alert('giving up... your browser sucks');
-      return false;
-    }
+      //if (!httpRequest) {
+        //alert('giving up... your browser sucks');
+        //return false;
 
-    httpRequest.onreadystatechange = processRequest;
-    httpRequest.open('GET', './includes/functions.php?carModel=' + this.id);
-    httpRequest.send();
+
+    // httpRequest.onreadystatechange = processRequest;
+    // httpRequest.open('GET', './includes/functions.php?carModel=' + this.id);
+    // httpRequest.send();
+
   }
 
 
-  function processRequest() {
-    let reqIndicator = document.querySelector('.request-state');
-    reqIndicator.textContent = httpRequest.readyState;
-    //debugger;
-
-    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-      if (httpRequest.status === 200) { // 200 means everything is awesome
-        //debugger;
-        let data = JSON.parse(httpRequest.responseText);
-
-        processResult(data);
-      } else {
-        alert('There was a problem with the request.');
-      }
-    }
-  }
+  // function processRequest() {
+  //   let reqIndicator = document.querySelector('.request-state');
+  //   reqIndicator.textContent = httpRequest.readyState;
+  //   //debugger;
+  //
+  //   if (httpRequest.readyState === XMLHttpRequest.DONE) {
+  //     if (httpRequest.status === 200) { // 200 means everything is awesome
+  //       //debugger;
+  //       let data = JSON.parse(httpRequest.responseText);
+  //
+  //       processResult(data);
+  //     } else {
+  //       alert('There was a problem with the request.');
+  //     }
+  //   }
+  // }
 
 
 function processResult(data) {
